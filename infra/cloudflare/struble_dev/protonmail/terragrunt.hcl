@@ -7,6 +7,7 @@ inputs = {
     protonmail_dkim_1= "protonmail.domainkey.dvu4n6x4rnptaek2rn6z223udeggcwpdxrtgeff4bxprwptwjxvda.domains.proton.ch."
     protonmail_dkim_2= "protonmail2.domainkey.dvu4n6x4rnptaek2rn6z223udeggcwpdxrtgeff4bxprwptwjxvda.domains.proton.ch."
     protonmail_dkim_3= "protonmail3.domainkey.dvu4n6x4rnptaek2rn6z223udeggcwpdxrtgeff4bxprwptwjxvda.domains.proton.ch."
+    protonmail_dmarc = "v=DMARC1; p=quarantine; rua=mailto:dmarc@struble.dev;"
 }
 
 terraform {
