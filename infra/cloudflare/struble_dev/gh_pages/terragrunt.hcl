@@ -1,5 +1,5 @@
-include {
-  path = find_in_parent_folders()
+include "provider" {
+  path = find_in_parent_folders("provider.hcl")
 }
 
 inputs = {
