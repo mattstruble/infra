@@ -12,19 +12,21 @@ data "cloudflare_zone" "zone_data" {
 }
 
 resource "cloudflare_record" "pages_apex" {
-  zone_id = data.cloudflare_zone.zone_data.id
-  name    = var.cloudflare_zone_name
-  type    = "CNAME"
-  value   = var.gh_pages_url
-  proxied = true
+  allow_overwrite = true
+  zone_id         = data.cloudflare_zone.zone_data.id
+  name            = var.cloudflare_zone_name
+  type            = "CNAME"
+  value           = var.gh_pages_url
+  proxied         = true
 }
 
 resource "cloudflare_record" "pages_www" {
-  zone_id = data.cloudflare_zone.zone_data.id
-  name    = "www"
-  type    = "CNAME"
-  value   = var.gh_pages_url
-  proxied = true
+  allow_overwrite = true
+  zone_id         = data.cloudflare_zone.zone_data.id
+  name            = "www"
+  type            = "CNAME"
+  value           = var.gh_pages_url
+  proxied         = true
 }
 
 resource "cloudflare_page_rule" "pages_rule_forward_www_to_apex" {
