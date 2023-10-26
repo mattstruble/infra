@@ -3,5 +3,5 @@ init:
 	terraform init
 
 .PHONY: apply
-apply:
+apply: init
 	terraform apply -var-file secrets.tfvars
