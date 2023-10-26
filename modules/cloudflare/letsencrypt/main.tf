@@ -1,9 +1,17 @@
-resource "cloudflare_zone" "zone_data" {
+terraform {
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.1"
+    }
+  }
+}
+data "cloudflare_zone" "zone_data" {
   zone = var.cloudflare_zone_name
 }
 
 resource "cloudflare_record" "wildcard_cname" {
-  zone_id = cloudflare_zone.zone_data.id
+  zone_id = data.cloudflare_zone.zone_data.id
   name    = "*"
   type    = "CNAME"
   value   = var.cloudflare_zone_name
@@ -11,7 +19,7 @@ resource "cloudflare_record" "wildcard_cname" {
 }
 
 resource "cloudflare_record" "wildcard_letsencrypt_caa" {
-  zone_id = cloudflare_zone.zone_data.id
+  zone_id = data.cloudflare_zone.zone_data.id
   name    = var.cloudflare_zone_name
   type    = "CAA"
   ttl     = 86400

@@ -6,6 +6,7 @@ variable "cloudflare_zone_name" {
 variable "protonmail_spf" {
   description = "The spf redirect for protonmail"
   type        = string
+  default     = "v=spf1 include:_spf.protonmail.ch mx ~all"
 }
 
 variable "protonmail_verification" {
@@ -16,11 +17,13 @@ variable "protonmail_verification" {
 variable "protonmail_mx_1" {
   description = "The first protonmail MX redirect"
   type        = string
+  default     = "mail.protonmail.ch"
 }
 
 variable "protonmail_mx_2" {
   description = "The second protonmail MX redirect"
   type        = string
+  default     = "mailsec.protonmail.ch"
 }
 
 variable "protonmail_dkim_1" {
@@ -41,4 +44,5 @@ variable "protonmail_dkim_3" {
 variable "protonmail_dmarc" {
   description = "The protonmail dmarc configuration"
   type        = string
+  default     = "v=DMARC1; p=quarantine;"
 }
