@@ -1,0 +1,27 @@
+#!/bin/bash
+
+CLR="\033[m"
+GRN="\033[0;32m"
+
+function die() {
+  echo "$@"
+  exit 1
+}
+
+echo -en ">>> ${GRN}Starting $0 hook${CLR} <<<\n"
+
+for binary in terraform terragrunt; do
+  which -s $binary || die "Unable to find $binary binary"
+done
+
+terraform fmt --recursive . || die "Unable to format files"
+terragrunt hclfmt . || die "Unable to format files"
+
+git status -s | grep '^ M' | awk '{print $NF}' | xargs git add
+git config custom.ignorePostCommitHook true # turn off hook
+git -c custom.ignorePostCommitHook=true commit -m 'Linter autocommit'
+git config --unset custom.ignorePostCommitHook # turn in back on
+
+echo -en ">>> ${GRN}Ending $0 hook${CLR} <<<\n"
+
+exit 0
