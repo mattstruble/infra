@@ -29,6 +29,4 @@ provider "cloudflare" {
 
 module "core" {
   source = "./core"
-
-  cloudflare_account_id = var.cloudflare_account_id
 }
