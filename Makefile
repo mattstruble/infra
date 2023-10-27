@@ -1,15 +1,15 @@
 .PHONY: init
 init:
-	git config core.hooksPath "./git-hooks"
-	terraform init
+	@git config core.hooksPath "./git-hooks"
+	@terragrunt run-all init
 
 .PHONY: plan
 plan : init
-	terraform plan -var-file secrets.tfvars
+	@terragrunt run-all init
 
 .PHONY: apply
 apply: plan
-	terraform apply -var-file secrets.tfvars
+	@terragrunt run-all plan
 
 .PHONY: format
 format:
