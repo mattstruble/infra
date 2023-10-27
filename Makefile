@@ -1,3 +1,8 @@
+.DEFAULT_GOAL := plan
+
+.PHONY: default
+default: plan
+
 .PHONY: init
 init:
 	@git config core.hooksPath "./git-hooks"
@@ -5,11 +10,11 @@ init:
 
 .PHONY: plan
 plan : init
-	@terragrunt run-all init
+	@terragrunt run-all plan
 
 .PHONY: apply
 apply: plan
-	@terragrunt run-all plan
+	@terragrunt run-all apply
 
 .PHONY: format
 format:
