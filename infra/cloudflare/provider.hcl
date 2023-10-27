@@ -10,9 +10,9 @@ inputs = {
   cloudflare_zone_name = local.zone_name
 }
 
-generate "versions" {
+generate "provider" {
 
-  path      = "version_override.tf"
+  path      = "provider_override.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 terraform {
@@ -23,13 +23,7 @@ terraform {
         }
     }
 }
-EOF
-}
 
-generate "provider" {
-  path      = "provider_override.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
 provider "cloudflare" {
     api_token = "${local.api_token}"
 }
