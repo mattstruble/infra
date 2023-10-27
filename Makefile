@@ -13,8 +13,10 @@ apply: plan
 
 .PHONY: format
 format:
+	@terraform fmt -recursive
 	@terragrunt hclfmt .
 
 .PHONY: check
 check:
+	@terraform fmt -check -recursive
 	@terragrunt hclfmt . --terragrunt-check
