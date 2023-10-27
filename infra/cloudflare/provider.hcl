@@ -1,4 +1,4 @@
-locals  {
+locals {
   secrets   = yamldecode(file(find_in_parent_folders("secrets.yaml")))
   api_token = local.secrets.cloudflare_api_token
 
@@ -7,14 +7,14 @@ locals  {
 }
 
 inputs = {
-    cloudflare_zone_name = local.zone_name
+  cloudflare_zone_name = local.zone_name
 }
 
 generate "versions" {
 
-    path = "version_override.tf"
-    if_exists = "overwrite_terragrunt"
-    contents = <<EOF
+  path      = "version_override.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
 terraform {
     required_providers {
         cloudflare = {

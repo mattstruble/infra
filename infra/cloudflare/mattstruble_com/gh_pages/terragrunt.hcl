@@ -3,9 +3,9 @@ include "provider" {
 }
 
 inputs = {
-    gh_pages_url = "struble.dev"
+  gh_pages_url = "struble.dev"
 }
 
 terraform {
-    source = "../../../../modules/cloudflare/gh_pages"
+  source = "../../../../modules/cloudflare/gh_pages"
 }
