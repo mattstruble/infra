@@ -2,6 +2,10 @@ include "provider" {
   path = find_in_parent_folders("provider.hcl")
 }
 
+include "root" {
+  path = find_in_parent_folders()
+}
+
 inputs = {
   protonmail_verification = "protonmail-verification=3af6a5bd38e303153ff1f47e1ae84348550bf101"
   protonmail_dkim_1       = "protonmail.domainkey.dvu4n6x4rnptaek2rn6z223udeggcwpdxrtgeff4bxprwptwjxvda.domains.proton.ch."
