@@ -35,3 +35,9 @@ variable "ec2_instance_type" {
   type        = string
   default     = "t2.large"
 }
+
+variable "ec2_ami" {
+  description = "AMI to use for the ec2 instance"
+  type        = string
+  default     = "ami-0aa2b7722dc1b5612"
+}

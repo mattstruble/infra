@@ -76,23 +76,24 @@ resource "tls_private_key" "tls_key" {
 resource "aws_key_pair" "ec2_key" {
   count      = 1
   key_name   = "${module.ec2_label.id}-ssh-key"
-  public_key = tls_key.public_key_openssh
+  public_key = tls_private_key.tls_key[0].public_key_openssh
   tags       = module.ec2_label.tags
 }
 
-resource "aws_iam_role" "mc_role" {
-  name = "${module.ec2_label}-profile"
+resource "aws_iam_instance_profile" "mc_role" {
+  name = "${module.ec2_label.id}-profile"
   tags = module.ec2_label.tags
 }
 
 # AWS Instance
 resource "aws_instance" "ec2_minecraft" {
-  key_name             = ec2_key.key_name
+  key_name             = aws_key_pair.ec2_key[0].key_name
   instance_type        = var.ec2_instance_type
-  iam_instance_profile = mc_role.id
+  iam_instance_profile = aws_iam_instance_profile.mc_role.id
+  ami                  = var.ec2_ami
 
   subnet_id                   = local.subnet_id
-  vpc_security_group_ids      = ec2_security_group.id
+  vpc_security_group_ids      = [aws_security_group.ec2_security_group.id]
   associate_public_ip_address = true
 
   tags = module.ec2_label.tags
@@ -108,9 +109,8 @@ resource "aws_ebs_volume" "mc_volume" {
 
 resource "aws_volume_attachment" "mc_vol_attach" {
   device_name = "/dev/sdf"
-  volume_id   = mc_volume.id
-  instance_id = ec2_minecraft.id
-  tags        = module.ec2_label.tags
+  volume_id   = aws_ebs_volume.mc_volume.id
+  instance_id = aws_instance.ec2_minecraft.id
 }
 
 # CloudWatch Alarm
@@ -127,6 +127,6 @@ resource "aws_cloudwatch_metric_alarm" "active_connections" {
   namespace           = "AWS/EC2"
   metric_name         = "NetworkIn"
   alarm_actions       = ["arn:aws:automate:${var.environment}:ec2:stop"]
-  dimensions          = { InstanceId = ec2_minecraft.id }
+  dimensions          = { InstanceId = aws_instance.ec2_minecraft.id }
   tags                = module.ec2_label.tags
 }
