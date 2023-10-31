@@ -1,0 +1,13 @@
+---
+- hosts: games_minecraft_server
+  become: true
+  user: ubuntu
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+
+  roles:
+    - fail2ban
+    - java
+    - minecraft
