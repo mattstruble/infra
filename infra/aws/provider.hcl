@@ -3,21 +3,46 @@ locals {
   region_name = local.region_vars.locals.region_name
 
   namespace_vars = read_terragrunt_config(find_in_parent_folders("namespace.hcl"))
-  namespace = local.namespace_vars.locals.namespace
+  namespace      = local.namespace_vars.locals.namespace
+
+  stage_vars = read_terragrunt_config(find_in_parent_folders("stage.hcl"))
+  stage      = local.stage_vars.locals.stage
 
   name_vars = read_terragrunt_config("name.hcl")
-  name = local.name_vars.locals.name
+  name      = local.name_vars.locals.name
 }
 
 inputs = {
-    namespace = local.namespace
-    environment = local.region_name
-    name = local.name
+  namespace   = local.namespace
+  region = local.region_name
+  stage       = local.stage
+  name        = local.name
 
+  label_context = {
+    label_key_case = "lower"
+    label_order = ["namespace", "stage", "name", "attributes"]
+    namespace      = local.namespace
+    environment    = local.region_name
+    name           = local.name
+    stage          = local.stage
     tags = {
-        terraform = true,
-        repo = "https://github.com/mattstruble/infra"
+      terraform     = true,
+      repo          = "https://github.com/mattstruble/infra"
+      repo_relative = path_relative_to_include()
+      by            = get_aws_caller_identity_arn()
     }
+
+    attributes = []
+    enabled = true,
+    descriptor_formats = {}
+    label_value_case = null,
+    label_as_tags = ["unset"]
+    regex_replace_chars = null
+    tenant = null
+    additional_tag_map = {}
+    delimiter = null
+    id_length_limit = null
+  }
 }
 
 generate "provider" {

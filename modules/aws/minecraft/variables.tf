@@ -1,21 +1,11 @@
-variable "namespace" {
+variable "region" {
   description = "ID element. Usually an abbreviation for the organization name."
   type        = string
 }
 
-variable "environment" {
-  description = "ID element. Usually used for the region."
-  type        = string
-}
-
-variable "name" {
-  description = "ID element. Usually the component or solution name."
-  type        = string
-}
-
-variable "tags" {
-  description = "Additional tags (e.g. {'BusinessUnit': 'XYZ'})"
-  type        = map(string)
+variable "label_context" {
+  description = "Context to pass into null-label for generating tags"
+  type        = any
 }
 
 variable "mc_port" {

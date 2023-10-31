@@ -7,7 +7,7 @@ include "root" {
 }
 
 inputs = {
-  txt_record_name = "_atproto"
+  txt_record_name  = "_atproto"
   txt_record_value = "did=did:plc:67hke6ig26o3huavs7mggdg2"
 }
 

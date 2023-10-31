@@ -19,19 +19,12 @@ data "external" "current_ip" {
 locals {
   vpc_id    = data.aws_vpc.default.id
   subnet_id = sort(data.aws_subnet_ids.default.ids)[0]
-  tags = {
-    by = data.aws_caller_identity.aws.arn
-  }
 }
 
 module "ec2_label" {
   source = "git::https://github.com/cloudposse/terraform-null-label.git?ref=main"
 
-  namespace   = var.namespace
-  environment = var.environment
-  name        = var.name
-  attributes  = ["ec2"]
-  tags        = merge(var.tags, local.tags)
+  context = var.label_context
 }
 
 
@@ -126,7 +119,7 @@ resource "aws_cloudwatch_metric_alarm" "active_connections" {
   evaluation_periods  = 3
   namespace           = "AWS/EC2"
   metric_name         = "NetworkIn"
-  alarm_actions       = ["arn:aws:automate:${var.environment}:ec2:stop"]
+  alarm_actions       = ["arn:aws:automate:${var.region}:ec2:stop"]
   dimensions          = { InstanceId = aws_instance.ec2_minecraft.id }
   tags                = module.ec2_label.tags
 }
