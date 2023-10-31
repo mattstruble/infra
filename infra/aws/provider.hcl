@@ -19,17 +19,17 @@ inputs = {
   name        = local.name
 
   label_context = {
-    label_key_case = "lower"
+    label_key_case = "title"
     label_order = ["namespace", "stage", "name", "attributes"]
     namespace      = local.namespace
     environment    = local.region_name
     name           = local.name
     stage          = local.stage
     tags = {
-      terraform     = true,
-      repo          = "https://github.com/mattstruble/infra"
-      repo_relative = path_relative_to_include()
-      by            = get_aws_caller_identity_arn()
+      Terraform     = true,
+      Repo          = "https://github.com/mattstruble/infra"
+      Repo_relative = path_relative_to_include()
+      By            = get_aws_caller_identity_arn()
     }
 
     attributes = []
