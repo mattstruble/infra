@@ -61,15 +61,13 @@ resource "aws_security_group" "ec2_security_group" {
 
 # EC2 SSH Key Pair
 resource "tls_private_key" "tls_key" {
-  count     = 1
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "aws_key_pair" "ec2_key" {
-  count      = 1
   key_name   = "${module.ec2_label.id}-ssh-key"
-  public_key = tls_private_key.tls_key[0].public_key_openssh
+  public_key = tls_private_key.tls_key.public_key_openssh
   tags       = module.ec2_label.tags
 }
 
@@ -80,7 +78,7 @@ resource "aws_iam_instance_profile" "mc_role" {
 
 # AWS Instance
 resource "aws_instance" "ec2_minecraft" {
-  key_name             = aws_key_pair.ec2_key[0].key_name
+  key_name             = aws_key_pair.ec2_key.key_name
   instance_type        = var.ec2_instance_type
   iam_instance_profile = aws_iam_instance_profile.mc_role.id
   ami                  = var.ec2_ami
