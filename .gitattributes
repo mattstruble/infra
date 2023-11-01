@@ -1,3 +1,4 @@
 **/secrets.tfvars filter=git-crypt diff=git-crypt
 **/secrets.yaml filter=git-crypt diff=git-crypt
 **/vault.yml filter=git-crypt diff=git-crypt
+*.pem filter=git-crypt diff=git-crypt
