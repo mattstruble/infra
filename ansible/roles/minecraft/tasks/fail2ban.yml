@@ -24,3 +24,9 @@
     values:
       - iptables-allports
       - cloudflare
+
+- name: Ensure service restarted
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: true
