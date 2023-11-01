@@ -8,6 +8,7 @@
     mode: "0644"
   with_items:
     - minecraft.service
+    - minecraft.socket
   notify:
     - restart Minecraft
   register: systemd_service_config
