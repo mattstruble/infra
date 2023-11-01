@@ -13,14 +13,14 @@ locals {
 }
 
 inputs = {
-  namespace   = local.namespace
-  region = local.region_name
-  stage       = local.stage
-  name        = local.name
+  namespace = local.namespace
+  region    = local.region_name
+  stage     = local.stage
+  name      = local.name
 
   label_context = {
     label_key_case = "title"
-    label_order = ["namespace", "stage", "name", "attributes"]
+    label_order    = ["namespace", "stage", "name", "attributes"]
     namespace      = local.namespace
     environment    = local.region_name
     name           = local.name
@@ -32,16 +32,16 @@ inputs = {
       By            = get_aws_caller_identity_arn()
     }
 
-    attributes = []
-    enabled = true,
-    descriptor_formats = {}
-    label_value_case = null,
-    label_as_tags = ["unset"]
+    attributes          = []
+    enabled             = true,
+    descriptor_formats  = {}
+    label_value_case    = null,
+    label_as_tags       = ["unset"]
     regex_replace_chars = null
-    tenant = null
-    additional_tag_map = {}
-    delimiter = null
-    id_length_limit = null
+    tenant              = null
+    additional_tag_map  = {}
+    delimiter           = null
+    id_length_limit     = null
   }
 }
 
