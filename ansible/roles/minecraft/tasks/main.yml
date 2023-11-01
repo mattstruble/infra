@@ -80,6 +80,8 @@
 - include: systemd.yml
   when: minecraft_process_control == 'systemd'
 
+- include: fail2ban.yml
+
 - name: agree to EULA
   copy:
     src: eula.txt
