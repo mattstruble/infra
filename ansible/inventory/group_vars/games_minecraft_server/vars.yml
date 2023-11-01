@@ -1,0 +1,14 @@
+---
+minecraft_server: minecraft
+minecraft_version: latest
+minecraft_user: "{{ minecraft_server }}"
+minecraft_group: "{{ minecraft_server }}"
+minecraft_home: "/{{ minecraft_server }}"
+minecraft_port: 25565
+
+minecraft_whitelist: "{{ vault_minecraft_whitelist }}"
+minecraft_ops: "{{ vault_minecraft_ops }}"
+minecraft_banned_players: "{{ vault_minecraft_banned_players }}"
+minecraft_banned_ips: "{{ vault_minecraft_banned_ips }}"
+
+ansible_private_key_file: "{{ vault_private_key }}"

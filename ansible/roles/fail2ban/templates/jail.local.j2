@@ -1,0 +1,16 @@
+[DEFAULT]
+bantime = 3600
+
+[ssh]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 3
+
+[minecraft]
+port = {{ minecraft_port }}
+logpath = /{{ minecraft_home }}/logs/latest.log
+filter = 
+failregex = ^[^:]*: Disconnecting \S+ \(/<ADDR>:\d+\): You are not white-listed on this server!
+enabled = true

@@ -1,0 +1,19 @@
+---
+- name: Ensure Fail2Ban Installed
+  package:
+    name: fail2ban
+    state: present
+    update_cache: true
+
+- name: Ensure template installed
+  template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+  register: config
+
+- name: Ensure service restarted
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: true
+  when: config.changed

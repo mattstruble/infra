@@ -1,0 +1,91 @@
+- name: include AWS specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "ec2/{{ instance_type | replace('.', '_') }}.yml"
+
+- name: create Minecraft group
+  group:
+    state: present
+    name: "{{ minecraft_group }}"
+    system: yes
+
+- name: create Minecraft user
+  user:
+    state: present
+    name: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
+    home: "{{ minecraft_home }}"
+
+- name: create Minecraft directory
+  file:
+    path: "{{minecraft_home}}"
+    state: directory
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
+
+- name: format EBS volume
+  filesystem:
+    dev: "{{ mount_path }}"
+    fstype: "xfs"
+
+- name: mounting the filesystem
+  mount:
+    name: "{{ minecraft_home }}"
+    src: "{{ mount_path }}"
+    fstype: "xfs"
+    state: mounted
+
+- name: query PaperMC releases
+  uri:
+    url: "https://api.papermc.io/v2/projects/paper"
+    method: GET
+    return_content: yes
+    status_code: 200
+    body_format: json
+  register: response
+  when: minecraft_version == "latest"
+
+- name: extract latest PaperMC version
+  set_fact:
+    minecraft_version: "{{ response['json']['versions'][-1] }}"
+  when: minecraft_version == "latest"
+
+- name: query PaperMC builds
+  uri:
+    url: "https://api.papermc.io/v2/projects/paper/versions/{{minecraft_version}}/builds"
+    method: GET
+    return_content: yes
+    status_code: 200
+    body_format: json
+  register: response
+
+- name: extract PaperMC build info
+  set_fact:
+    mc_build_number: "{{ response['json']['builds'][-1]['build']}}"
+    minecraft_jar: "{{ response['json']['builds'][-1]['downloads']['application']['name']}}"
+    mc_jar_sha: "{{ response['json']['builds'][-1]['downloads']['application']['sha256']}}"
+
+- name: define PaperMC download path
+  set_fact:
+    mc_download_path: "https://api.papermc.io/v2/projects/paper/versions/{{minecraft_version}}/builds/{{ mc_build_number }}/downloads/{{ minecraft_jar }}"
+
+- name: download PaperMC
+  get_url:
+    url: "{{ mc_download_path }}"
+    dest: "{{ minecraft_home }}"
+    checksum: "sha256:{{ mc_jar_sha }}"
+  notify:
+    - restart Minecraft
+
+- include: systemd.yml
+  when: minecraft_process_control == 'systemd'
+
+- name: agree to EULA
+  copy:
+    src: eula.txt
+    dest: "{{ minecraft_home }}/eula.txt"
+    mode: 0644
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
+  notify:
+    - enable service
