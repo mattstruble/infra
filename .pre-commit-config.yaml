@@ -1,0 +1,67 @@
+---
+default_stages: [commit]
+
+exclude: "CHANGELOG.md"
+
+ci:
+  # format compatible with commitlint
+  autoupdate_commit_msg: "ci: pre-commit autoupdate"
+  autoupdate_schedule: monthly
+  autofix_commit_msg: |
+    chore: auto fixes from pre-commit.com hooks
+
+    for more information, see https://pre-commit.ci
+repos:
+  # Standard hooks to fix up file
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: fix-encoding-pragma
+      - id: trailing-whitespace # Trim whitespace from end of each line
+      - id: end-of-file-fixer # All files only end in newline
+      - id: check-yaml # verify yaml syntax
+        args: [--allow-multiple-documents]
+      - id: check-added-large-files # prevent extremely large files from being committed
+        args: [--maxkb=10000]
+      - id: mixed-line-ending # force linux line endings
+        args: [--fix=lf]
+      - id: check-ast # validates python files
+      - id: check-merge-conflict # prevent merge conflict strings
+      - id: check-case-conflict # prevent file namings that would fail on case insensitive file systems
+      - id: check-docstring-first # checks a common error of defining a docstring after code
+      - id: check-toml # validates toml files
+      - id: debug-statements # validates there are no debugger imports
+      - id: detect-private-key
+      - id: name-tests-test # ensures test files are named correctly
+        args: [--pytest-test-first]
+      - id: check-json
+      # - id: pretty-format-json
+      # args: [--autofix]
+      - id: check-shebang-scripts-are-executable
+
+  # Check for common spelling errors
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: [-w]
+
+  # Try to detect strings that are likely to be passwords or secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        exclude: (WORKSPACE)|(.*lock)|(secrets.yaml)|(vault.yml)
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v6.22.0
+    hooks:
+      - id: ansible-lint
+
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.5
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_tflint
+      - id: terragrunt_fmt
+      - id: terrascan
