@@ -7,7 +7,7 @@ include "root" {
 }
 
 inputs = {
-  txt_record_value = "google-site-verification=rKLUGfAqMz12e1zb1-E1wSPwBUu_UU3tE25oCm5BaZQ"
+  txt_record_value = "google-site-verification=rKLUGfAqMz12e1zb1-E1wSPwBUu_UU3tE25oCm5BaZQ" # pragma: allowlist secret
 }
 
 terraform {
