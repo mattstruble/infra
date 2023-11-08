@@ -17,15 +17,4 @@
     regexp: "^cftoken="
     line: "cftoken={{ cftoken }}"
 
-- name: Ensure template installed
-  template:
-    src: jail.local.j2
-    dest: /etc/fail2ban/jail.local
-  register: config
-
-- name: Ensure service restarted
-  service:
-    name: fail2ban
-    state: restarted
-    enabled: true
-  when: config.changed
+- include: jail.yml
