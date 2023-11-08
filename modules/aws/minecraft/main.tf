@@ -88,6 +88,11 @@ resource "aws_instance" "ec2_minecraft" {
   associate_public_ip_address = true
   monitoring                  = true
 
+  metadata_options {
+    http_tokens   = "required"
+    http_endpoint = "enabled"
+  }
+
   tags = module.ec2_label.tags
 }
 
