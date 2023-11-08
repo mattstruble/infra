@@ -86,6 +86,7 @@ resource "aws_instance" "ec2_minecraft" {
   subnet_id                   = local.subnet_id
   vpc_security_group_ids      = [aws_security_group.ec2_security_group.id]
   associate_public_ip_address = true
+  monitoring                  = true
 
   tags = module.ec2_label.tags
 }
