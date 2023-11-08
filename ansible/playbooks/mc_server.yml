@@ -9,5 +9,6 @@
 
   roles:
     - fail2ban
+    - cloudflare
     - java
     - minecraft
