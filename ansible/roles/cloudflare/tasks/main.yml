@@ -1,0 +1,22 @@
+---
+- name: Ensure Packages Installed
+  package:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - ddclient
+    - libdata-validate-ip-perl
+    - libjson-any-perl
+  notify:
+    - Enable ddclient
+
+- name: Install ddclient.conf
+  template:
+    src: ddclient.conf.j2
+    dest: /etc/ddclient.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart ddclient

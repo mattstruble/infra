@@ -1,2 +1,3 @@
-cftoken: vault_cftoken
-cfuser: vault_cfuser
+cftoken: "{{ vault_cftoken }}"
+cfuser: "{{ vault_cfuser }}"
+cfzone: "{{ vault_cfzone }}"
