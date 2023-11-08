@@ -11,6 +11,4 @@ minecraft_ops: "{{ vault_minecraft_ops }}"
 minecraft_banned_players: "{{ vault_minecraft_banned_players }}"
 minecraft_banned_ips: "{{ vault_minecraft_banned_ips }}"
 
-ansible_private_key_file: "{{ vault_private_key }}"
-
 cfsubdomain: "{{ vault_cfsubdomain }}"
