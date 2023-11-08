@@ -1,0 +1,3 @@
+---
+fail2ban_bantime: 3600
+fail2ban_ssh_maxretry: 3

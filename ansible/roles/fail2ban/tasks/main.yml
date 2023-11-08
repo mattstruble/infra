@@ -5,15 +5,16 @@
     state: present
     update_cache: true
 
-- name: Ensure template installed
-  template:
-    src: jail.local.j2
-    dest: /etc/fail2ban/jail.local
-  register: config
+- name: Ensure cfuser is set
+  ansible.builtin.lineinfile:
+    path: /etc/fail2ban/action.d/cloudflare.conf
+    regexp: "^cfuser="
+    line: "cfuser={{ cfuser }}"
 
-- name: Ensure service restarted
-  service:
-    name: fail2ban
-    state: restarted
-    enabled: true
-  when: config.changed
+- name: Ensure cftoken is set
+  ansible.builtin.lineinfile:
+    path: /etc/fail2ban/action.d/cloudflare.conf
+    regexp: "^cftoken="
+    line: "cftoken={{ cftoken }}"
+
+- include: jail.yml

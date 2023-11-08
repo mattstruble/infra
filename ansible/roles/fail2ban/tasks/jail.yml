@@ -1,0 +1,37 @@
+---
+- name: Set default fail2ban jail.conf
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "bantime", value: "{{ fail2ban_bantime }}" }
+
+- name: Set ssh fail2ban jail.conf
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: ssh
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "enabled", value: "true" }
+    - { option: "port", value: "ssh" }
+    - { option: "filter", value: "sshd" }
+    - { option: "logpath", value: "/var/log/auth.log" }
+    - { option: "maxretry", value: "{{ fail2ban_ssh_maxretry }}" }
+
+- name: Set ssh fail2ban jail.conf actions
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: ssh
+    option: "action"
+    values:
+      - iptables-allports
+      - cloudflare
+
+- name: Ensure service restarted
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: true

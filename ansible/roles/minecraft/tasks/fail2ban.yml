@@ -1,0 +1,32 @@
+---
+- name: Set minecraft fail2ban jail.conf
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: minecraft
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "port", value: "{{ minecraft_port }}" }
+    - { option: "logpath", value: "/{{ minecraft_home }}/logs/latest.log" }
+    - { option: "filter", value: "" }
+    - { option: "enabled", value: "true" }
+    - { option: "datepattern", value: '^\[%%H:%%M:%%S\]\s+' }
+    - {
+        option: "failregex",
+        value: '\[(?P<time>\d+:\d+:\d+)\].*\(\/(?P<host>\d+.\d+.\d+.\d+):\d+\) You are not white-listed on this server.*$',
+      }
+
+- name: Set minecraft fail2ban jail.conf actions
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: minecraft
+    option: "action"
+    values:
+      - iptables-allports
+      - cloudflare
+
+- name: Ensure service restarted
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: true
