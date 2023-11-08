@@ -8,13 +8,50 @@
     - ddclient
     - libdata-validate-ip-perl
     - libjson-any-perl
+    - git
   notify:
     - Enable ddclient
+
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Set ddclient version variables
+  set_fact:
+    current_version: "{{ ansible_facts.packages['ddclient'][0]['version']}}"
+    required_version: "3.9.1"
+
+# need to download at least version 3.9.1
+# https://community.cloudflare.com/t/ddclient-errors/165205/5
+- name: Download Latest ddclient
+  git:
+    repo: https://github.com/ddclient/ddclient.git
+    version: v3.9.1
+    dest: /tmp/ddclient
+  when: current_version is version(required_version, '<')
+
+- name: Overwrite ddclient binary
+  ansible.builtin.copy:
+    src: /tmp/ddclient/ddclient
+    dest: /usr/sbin/
+    owner: root
+    group: root
+    force: true
+    remote_src: true
+  become: true
+  when: current_version is version(required_version, '<')
+  notify:
+    - Restart ddclient
+
+- name: Create proper directory structure
+  ansible.builtin.file:
+    path: /etc/ddclient
+    state: directory
 
 - name: Install ddclient.conf
   template:
     src: ddclient.conf.j2
-    dest: /etc/ddclient.conf
+    dest: /etc/ddclient/ddclient.conf
     owner: root
     group: root
     mode: "0644"
