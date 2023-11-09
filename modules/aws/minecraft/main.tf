@@ -102,7 +102,6 @@ resource "aws_ebs_volume" "mc_volume" {
   size              = 8
   type              = "gp3"
   tags              = module.ec2_label.tags
-  encrypted         = true
 }
 
 resource "aws_volume_attachment" "mc_vol_attach" {
