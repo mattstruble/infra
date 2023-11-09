@@ -74,6 +74,8 @@
     url: "{{ mc_download_path }}"
     dest: "{{ minecraft_home }}"
     checksum: "sha256:{{ mc_jar_sha }}"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
   notify:
     - restart Minecraft
 

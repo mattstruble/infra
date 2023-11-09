@@ -86,6 +86,12 @@ resource "aws_instance" "ec2_minecraft" {
   subnet_id                   = local.subnet_id
   vpc_security_group_ids      = [aws_security_group.ec2_security_group.id]
   associate_public_ip_address = true
+  monitoring                  = true
+
+  metadata_options {
+    http_tokens   = "required"
+    http_endpoint = "enabled"
+  }
 
   tags = module.ec2_label.tags
 }
@@ -96,6 +102,7 @@ resource "aws_ebs_volume" "mc_volume" {
   size              = 8
   type              = "gp3"
   tags              = module.ec2_label.tags
+  encrypted         = true
 }
 
 resource "aws_volume_attachment" "mc_vol_attach" {
