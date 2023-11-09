@@ -51,7 +51,7 @@
 - name: Install ddclient.conf
   template:
     src: ddclient.conf.j2
-    dest: /etc/ddclient/ddclient.conf
+    dest: /etc/ddclient.conf
     owner: root
     group: root
     mode: "0644"

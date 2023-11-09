@@ -27,7 +27,7 @@ variable "ec2_instance_type" {
 }
 
 variable "ec2_ami" {
-  description = "AMI to use for the ec2 instance"
+  description = "AMI to use for the ec2 instance. Defaults to ubuntu 22.04 LTS x86"
   type        = string
-  default     = "ami-0aa2b7722dc1b5612"
+  default     = "ami-0fc5d935ebf8bc3bc"
 }
