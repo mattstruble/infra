@@ -11,5 +11,5 @@ inputs = {
 }
 
 terraform {
-  source = "../../../../modules/cloudflare/txt_record"
+  source = "../../../../terraform/cloudflare/txt_record"
 }

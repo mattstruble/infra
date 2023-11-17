@@ -11,5 +11,5 @@ inputs = {
 }
 
 terraform {
-  source = "../../../../modules/cloudflare/gh_pages"
+  source = "../../../../terraform/cloudflare/gh_pages"
 }

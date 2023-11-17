@@ -31,7 +31,7 @@ output "private_key" {
 
 resource "local_file" "private_key" {
   content              = tls_private_key.tls_key.private_key_pem
-  filename             = "./${module.ec2_label.id}-private-key.pem"
+  filename             = "~/.ssh/${module.ec2_label.id}-private-key.pem"
   directory_permission = "0700"
   file_permission      = "0700"
 }

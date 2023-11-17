@@ -14,5 +14,5 @@ inputs = {
 }
 
 terraform {
-  source = "../../../../modules/cloudflare/protonmail"
+  source = "../../../../terraform/cloudflare/protonmail"
 }

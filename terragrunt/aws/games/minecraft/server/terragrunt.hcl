@@ -8,5 +8,5 @@ include "root" {
 
 
 terraform {
-  source = "../../../../../modules/aws/minecraft"
+  source = "../../../../../terraform/aws/minecraft"
 }
