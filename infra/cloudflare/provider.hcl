@@ -1,6 +1,6 @@
 locals {
-  secrets   = yamldecode(file(find_in_parent_folders("secrets.yaml")))
-  api_token = local.secrets.cloudflare_api_token
+  secrets    = yamldecode(file(find_in_parent_folders("secrets.yaml")))
+  api_token  = local.secrets.cloudflare_api_token
   account_id = local.secrets.account_id
 
   zone_vars = read_terragrunt_config(find_in_parent_folders("zone.hcl"))
@@ -10,9 +10,9 @@ locals {
 inputs = {
   cloudflare_zone_name = local.zone_name
 
-    # cloudposse inputs
-  zone = local.zone_name
-  account_id = local.account_id
+  # cloudposse inputs
+  zone         = local.zone_name
+  account_id   = local.account_id
   zone_enabled = false
   argo_enabled = false
 }

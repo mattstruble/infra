@@ -3,17 +3,17 @@ include "provider" {
 }
 
 inputs = {
-    records = [
-        {
-            name = "@"
-            value = "pillar-ml.github.io"
-            type = "CNAME"
-            proxied = true
-            ttl = 1
-        }
-    ]
+  records = [
+    {
+      name    = "@"
+      value   = "pillar-ml.github.io"
+      type    = "CNAME"
+      proxied = true
+      ttl     = 1
+    }
+  ]
 }
 
 terraform {
-    source = "git::git@github.com:cloudposse/terraform-cloudflare-zone.git/?ref=0.5.1"
+  source = "git::git@github.com:cloudposse/terraform-cloudflare-zone.git/?ref=0.5.1"
 }
