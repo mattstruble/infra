@@ -10,6 +10,20 @@ inputs = {
       type    = "CNAME"
       proxied = true
       ttl     = 1
+    },
+    {
+      name    = "www"
+      value   = "pillar.ml"
+      type    = "CNAME"
+      proxied = true
+      ttl     = 1
+    },
+    {
+      name    = "*"
+      value   = "pillar.ml"
+      type    = "CNAME"
+      proxied = true
+      ttl     = 1
     }
   ]
 }
