@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := plan
 
-TERRAGRUNT_WORKING_DIR := ./infra
+TERRAGRUNT_WORKING_DIR := ./terragrunt
 
 .PHONY: default
 default: plan
