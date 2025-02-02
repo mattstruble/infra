@@ -8,7 +8,7 @@ include "root" {
 
 inputs = {
   tutamail_verification = "t-verify=27145c926d106c1c4b8b4d7c4a17edfa"
-  dmarc        = "v=DMARC1; p=quarantine; adkim=s; rua=mailto:dmarc@struble.dev;"
+  dmarc                 = "v=DMARC1; p=quarantine; adkim=s; rua=mailto:dmarc@struble.dev;"
 }
 
 terraform {
