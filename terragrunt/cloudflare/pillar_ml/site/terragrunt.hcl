@@ -29,5 +29,5 @@ inputs = {
 }
 
 terraform {
-  source = "git::git@github.com:cloudposse/terraform-cloudflare-zone.git/?ref=0.5.1"
+  source = "git::git@github.com:cloudposse/terraform-cloudflare-zone.git/?ref=v1.0.1"
 }
