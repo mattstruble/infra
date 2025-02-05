@@ -22,3 +22,6 @@
 - name: Install Ansible Requests
   ansible.builtin.pip:
     name: requests
+- name: Install Ansible Docker
+  ansible.builtin.pip:
+    name: docker

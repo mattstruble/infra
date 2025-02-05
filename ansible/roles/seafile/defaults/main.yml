@@ -1,0 +1,7 @@
+seafile_user: "root"
+seafile_folder_path: "/opt/seafile/"
+seafile_init_sql_root_password: "secret"
+seafile_sql_log_console: "true"
+seafile_mariadb_auto_upgrade: "1"
+seafile_db_folder: "{{ (seafile_folder_path, 'db') | path_join }}"
+seafile_data_folder: "{{ (seafile_folder_path, 'data') | path_join }}"

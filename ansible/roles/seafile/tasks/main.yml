@@ -1,6 +1,50 @@
-- name: Install requests
-  ansible.builtin.pip:
-    name: requests
+- name: Create Seafile Directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ seafile_db_folder }}"
+    - "{{ seafile_data_folder }}"
 - name: Create Seafile Network
   community.docker.docker_network:
     name: seafile-net
+    internal: true
+    scope: local
+    attachable: true
+  register: seafile_network
+- name: Register Network Info
+  ansible.builtin.set_fact:
+    network_name: "{{ seafile_network['network']['Name'] }}"
+    network_id: "{{ seafile_network['network']['Id'] }}"
+- name: Create Seafile DB
+  community.docker.docker_container:
+    name: seafile-db
+    user: 1037:100
+    state: started
+    image: mariadb:10.11
+    networks:
+      - name: "{{ network_name }}"
+    volumes:
+      - "{{ seafile_db_folder }}:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ seafile_init_sql_root_password }}"
+      MYSQL_PWD: "{{ seafile_init_sql_root_password }}"
+      MYSQL_LOG_CONSOLE: "{{ seafile_sql_log_console }}"
+      MARIADB_AUTO_UPGRADE: "{{ seafile_mariadb_auto_upgrade }}"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect", "--mariadbupgrade", "--innodb_initialized"]
+      interval: 20s
+      start_period: 30s
+      timeout: 5s
+      retries: 10
+    comparisons:
+      "*": strict
+  register: seafile_db
+- name: Create seafile-memcached
+  community.docker.docker_container:
+    name: seafile-memcached
+    image: memcached:1.6.29
+    entrypoint: ["memcached", "-m", "256"]
+    networks:
+      - name: "{{ network_name }}"
+  register: seafile_memcached
