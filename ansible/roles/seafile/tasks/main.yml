@@ -1,0 +1,6 @@
+- name: Install requests
+  ansible.builtin.pip:
+    name: requests
+- name: Create Seafile Network
+  community.docker.docker_network:
+    name: seafile-net
