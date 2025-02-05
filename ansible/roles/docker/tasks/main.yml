@@ -1,0 +1,24 @@
+- name: Check OS
+  ansible.builtin.fail:
+    msg: "Warning: Invalid OS distribution '{{ ansible_os_family}}' ensure docker is installed."
+  when: ansible_facts['os_family'] == "OtherLinux"
+  ignore_errors: true
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+- name: Install Docker
+  ansible.builtin.package:
+    name: "{{ dependencies }}"
+    state: present
+  when: ansible_facts['os_family'] != "OtherLinux"
+- name: Start Docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  when: ansible_facts['os_family'] != "OtherLinux"
+- name: Install Ansible Requests
+  ansible.builtin.pip:
+    name: requests
