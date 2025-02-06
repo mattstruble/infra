@@ -25,3 +25,17 @@
 - name: Install Ansible Docker
   ansible.builtin.pip:
     name: docker
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+  register: docker_group
+- name: Create docker group facts
+  ansible.builtin.set_fact:
+    docker_group_name: "{{ docker_group['name']}}"
+    docker_group_gid: "{{ docker_group['gid']}}"
+- name: Ensure folder "docker" exists
+  ansible.builtin.file:
+    path: "{{ docker_folder_path }}"
+    group: "{{ docker_group_name }}"
+    state: directory

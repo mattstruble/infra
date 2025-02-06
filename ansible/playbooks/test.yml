@@ -1,0 +1,15 @@
+- name: Local Lab
+  hosts: nas
+  remote_user: "{{ ansible_user }}"
+  become: true
+  pre_tasks:
+    - name: Get device uname
+      ansible.builtin.command: "uname -a"
+      changed_when: false
+      register: device_uname
+    - name: Update OS Fact
+      ansible.builtin.set_fact:
+        ansible_os_family: Synology
+      when: "'synology' in device_uname.stdout"
+  roles:
+    - seafile

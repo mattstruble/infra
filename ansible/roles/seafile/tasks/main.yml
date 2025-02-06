@@ -1,6 +1,21 @@
+- name: Ensure "seafile" user exists
+  ansible.builtin.user:
+    name: seafile
+    group: "{{ docker_group_name }}"
+    comment: Seafile Docker User
+    create_home: true
+  register: seafile_user
+- name: Register seafile user Info
+  ansible.builtin.set_fact:
+    seafile_db_folder: "{{ (seafile_user['home'], 'db') | path_join}}"
+    seafile_data_folder: "{{ (seafile_user['home'], 'data') | path_join}}"
+    seafile_uid: "{{ seafile_user['uid']}}"
+    seafile_gid: "{{ seafile_user['group']}}"
+    seafile_docker_user: "{{ seafile_uid }}:{{ seafile_gid }}"
 - name: Create Seafile Directories
   ansible.builtin.file:
     path: "{{ item }}"
+    owner: "{{ seafile_user['name'] }}"
     state: directory
   loop:
     - "{{ seafile_db_folder }}"
@@ -19,7 +34,7 @@
 - name: Create Seafile DB
   community.docker.docker_container:
     name: seafile-db
-    user: 1037:100
+    user: "{{ seafile_docker_user }}"
     state: started
     image: mariadb:10.11
     networks:
@@ -43,6 +58,7 @@
 - name: Create seafile-memcached
   community.docker.docker_container:
     name: seafile-memcached
+    user: "{{ seafile_docker_user }}"
     image: memcached:1.6.29
     entrypoint: ["memcached", "-m", "256"]
     networks:
