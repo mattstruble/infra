@@ -1,0 +1,24 @@
+ungrouped:
+  hosts:
+    localhost:
+      vars:
+        ansible_connection: local
+        ansible_python_interpreter: '{{ansible_playbook_python}}'
+rpis:
+  hosts:
+    brrpi1:
+    brrpi2:
+    brrpi3:
+nas:
+  hosts:
+    yggdrasil:
+      ansible_python_interpreter: /volume1/@appstore/python310/bin/python3
+swarm:
+  hosts:
+    brrpi1:
+    brrpi2:
+    brrpi3:
+homelab:
+  children:
+    nas:
+    swarm:

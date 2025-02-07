@@ -1,0 +1,2 @@
+seafile_init_sql_root_password: "{{ vault_init_seafile_sql_root_password }}"
+seafile_user: "{{ vault_seafile_user }}"

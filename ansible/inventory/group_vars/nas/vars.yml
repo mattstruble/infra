@@ -1,0 +1,4 @@
+ansible_user: "{{ vault_ansible_user }}"
+seafile_folder_path: "/volume1/homes/seafile"
+docker_folder_path: "/volume1/docker"
+seafile_user: "{{ vault_seafile_user }}"

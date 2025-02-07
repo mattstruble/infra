@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: vault\.yml$
+    kms: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
