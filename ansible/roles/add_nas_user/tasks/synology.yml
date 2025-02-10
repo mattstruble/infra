@@ -1,0 +1,41 @@
+---
+- name: Get list of accounts
+  become: true
+  ansible.builtin.command: "/usr/syno/sbin/synouser -enum all"
+  changed_when: false
+  register: synusers_list
+
+- name: "Create account {{ add_nas_user_account }}"
+  when: add_nas_user_account not in synusers_list.stdout_lines
+  ansible.builtin.command:
+    argv:
+      - "/usr/syno/sbin/synouser"
+      - "--add {{ add_nas_user_account | quote }}"
+      - "{{ add_nas_user_password | quote }}"
+      - "{{ add_nas_user_comment | quote }}"
+      - "0"
+      - "{{ add_nas_user_email | quote }}"
+      - "{{ add_nas_user_privilege | quote }}"
+
+- name: "Set group for {{ add_nas_user_account }}"
+  when: add_nas_user_groups is defined
+  ansible.builtin.command: "/usr/syno/sbin/synogroup --memberadd {{ group }} {{ add_nas_user_account }}"
+  loop: "{{ add_nas_user_groups }}"
+  loop_control:
+    loop_var: group
+
+- name: "Check homedir is existing for {{ add_nas_user_account }}"
+  when: add_nas_user_create_home
+  ansible.builtin.command: "/usr/syno/sbin/synouser --get {{ add_nas_user_account }} | head -n6 | tail -n1 | awk -F'[' {print $2} | awk -F']' '{print $1}'"
+  ignore_errors: true
+  changed_when: false
+  register: homedir_is_existing
+
+- name: "Create account home directory for {{ add_nas_user_account }}"
+  when: ( homedir_is_existing.stdout | length ) == 0 and add_nas_user_create_home
+  ansible.builtin.command: "/usr/syno/bin/synouserhome --prepare-folder {{ add_nas_user_account | quote }}"
+
+- name: "Get uid for {{ add_nas_user_account }}"
+  ansible.builtin.command: "id -u {{ add_nas_user_account }}"
+  changed_when: false
+  register: user_uid

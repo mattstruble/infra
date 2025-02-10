@@ -1,0 +1,7 @@
+---
+- name: "Add account"
+  # no_log: true # hide passwords
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+    - "{{ add_account.yml }}"

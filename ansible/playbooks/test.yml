@@ -1,3 +1,4 @@
+---
 - name: Local Lab
   hosts: nas
   remote_user: "{{ ansible_user }}"
@@ -12,4 +13,10 @@
         ansible_os_family: Synology
       when: "'synology' in device_uname.stdout"
   roles:
-    - seafile
+    # - seafile
+    - role: add_nas_user
+      add_nas_user_account: seafile
+      add_nas_user_groups:
+        - docker
+      add_nas_user_create_home: true
+      add_nas_user_password: foobar

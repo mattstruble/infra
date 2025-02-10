@@ -1,0 +1,7 @@
+---
+add_nas_user_account: "{{ undef(hint='You must specify an account name') }}"
+add_nas_user_password: "{{ undef(hint='You must specify an account password') }}"
+add_nas_user_create_home: false
+add_nas_user_privilege: 0
+add_nas_user_comment: ""
+add_nas_user_email: ""

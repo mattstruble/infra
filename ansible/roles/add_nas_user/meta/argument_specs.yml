@@ -1,0 +1,33 @@
+---
+argument_specs:
+  main:
+    short_description: Create user accounts on NAS devices.
+    options:
+      add_nas_user_account:
+        type: str
+        required: true
+        description: User account to create
+      add_nas_user_password:
+        type: str
+        required: true
+        description: User account password
+      add_nas_user_groups:
+        type: list
+        required: false
+        description: Groups to apply the user to
+      add_nas_user_comment:
+        type: str
+        required: false
+        description: Descriptive name to apply to user
+      add_nas_user_create_home:
+        type: bool
+        required: false
+        description: Create home path for the user
+      add_nas_user_privilege:
+        type: int
+        required: false
+        description: Application privileges of the account
+      add_nas_user_email:
+        type: str
+        required: false
+        description: Email of user account
