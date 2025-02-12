@@ -5,3 +5,8 @@
   with_first_found:
     - "{{ ansible_os_family }}.yml"
     - "{{ add_account.yml }}"
+
+- name: "Get uid for {{ add_nas_user_account }}"
+  ansible.builtin.command: "id -u {{ add_nas_user_account }}"
+  changed_when: false
+  register: add_nas_user_uid

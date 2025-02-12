@@ -1,0 +1,13 @@
+---
+argument_specs:
+  main:
+    short_description: Create group on NAS devices.
+    options:
+      add_nas_group_name:
+        type: str
+        required: true
+        description: Name of the group
+      add_nas_group_state:
+        type: str
+        required: false
+        description: Group state

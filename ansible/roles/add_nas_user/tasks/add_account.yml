@@ -1,0 +1,8 @@
+---
+- name: Create user {{ add_nas_user_account }}
+  ansible.builtin.user:
+    name: "{{ add_nas_user_account }}"
+    groups: "{{ add_nas_user_groups }}"
+    comment: "{{ add_nas_user_comment }}"
+    create_home: add_nas_user_create_home
+    password: "{{ add_nas_user_password }}"

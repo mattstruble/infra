@@ -1,41 +1,61 @@
+---
 - name: Check OS
   ansible.builtin.fail:
     msg: "Warning: Invalid OS distribution '{{ ansible_os_family}}' ensure docker is installed."
   when: ansible_facts['os_family'] == "OtherLinux"
   ignore_errors: true
+
 - name: Include OS-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
+
 - name: Install Docker
   ansible.builtin.package:
     name: "{{ dependencies }}"
     state: present
   when: ansible_facts['os_family'] != "OtherLinux"
+
 - name: Start Docker
   ansible.builtin.service:
     name: docker
     state: started
     enabled: true
   when: ansible_facts['os_family'] != "OtherLinux"
+
 - name: Install Ansible Requests
   ansible.builtin.pip:
     name: requests
+
 - name: Install Ansible Docker
   ansible.builtin.pip:
     name: docker
-- name: Ensure group "docker" exists
-  ansible.builtin.group:
-    name: docker
-    state: present
-  register: docker_group
+
+- name: Create group "docker"
+  ansible.builtin.include_role:
+    name: add_nas_group
+    apply:
+      delegate_to: nas
+  vars:
+    add_nas_group_name: docker
+
 - name: Create docker group facts
   ansible.builtin.set_fact:
-    docker_group_name: "{{ docker_group['name']}}"
-    docker_group_gid: "{{ docker_group['gid']}}"
+    docker_group_name: docker
+    docker_group_gid: "{{ add_nas_group_gid.stdout }}"
+
 - name: Ensure folder "docker" exists
   ansible.builtin.file:
     path: "{{ docker_folder_path }}"
+    owner: "root"
     group: "{{ docker_group_name }}"
     state: directory
+    mode: '660'
+
+- name: Give docker group docker.sock permissions
+  ansible.builtin.file:
+    path: "/var/run/docker.sock"
+    owner: "root"
+    group: "docker"
+    mode: "760"

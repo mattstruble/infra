@@ -26,16 +26,14 @@
 
 - name: "Check homedir is existing for {{ add_nas_user_account }}"
   when: add_nas_user_create_home
-  ansible.builtin.command: "/usr/syno/sbin/synouser --get {{ add_nas_user_account }} | head -n6 | tail -n1 | awk -F'[' {print $2} | awk -F']' '{print $1}'"
+  ansible.builtin.command: /usr/syno/sbin/synouser -get {{ add_nas_user_account | quote}} | grep \"User Dir\" | grep -E -o \"\[(.*?)\]\"
   ignore_errors: true
   changed_when: false
-  register: homedir_is_existing
+  register: add_nas_user_home_dir
+
+- ansible.builtin.debug:
+    var: add_nas_user_home_dir
 
 - name: "Create account home directory for {{ add_nas_user_account }}"
-  when: ( homedir_is_existing.stdout | length ) == 0 and add_nas_user_create_home
+  when: ( add_nas_user_home_dir.stdout | length ) == 0 and add_nas_user_create_home
   ansible.builtin.command: "/usr/syno/bin/synouserhome --prepare-folder {{ add_nas_user_account | quote }}"
-
-- name: "Get uid for {{ add_nas_user_account }}"
-  ansible.builtin.command: "id -u {{ add_nas_user_account }}"
-  changed_when: false
-  register: user_uid

@@ -1,0 +1,5 @@
+---
+name: Create group {{ add_nas_group_name }}
+ansible.builtin.group:
+  name: "{{ add_nas_group_name }}"
+  state: "{{ add_nas_group_state }}"

@@ -1,19 +1,35 @@
 ---
 - name: Ensure "seafile" user exists
-  ansible.builtin.user:
-    name: seafile
-    group: "{{ docker_group_name }}"
-    comment: Seafile Docker User
-    create_home: true
-  register: seafile_user
+  ansible.builtin.include_role:
+    name: add_nas_user
+    apply:
+      delegate_to: nas
+  vars:
+    add_nas_user_account: seafile
+    add_nas_user_groups:
+      - docker
+    add_nas_user_comment: Seafile Docker User
+    add_nas_user_create_home: true
+    add_nas_user_password: "{{ lookup('ansible.builtin.password', 'credentials/nas/seafile', length=30)}}"
+
+- name: Register seafile user home dir
+  ansible.builtin.set_fact:
+    seafile_home_dir: "{{ add_nas_user_home_dir.stdout }}"
 
 - name: Register seafile user Info
   ansible.builtin.set_fact:
-    seafile_db_folder: "{{ (seafile_user['home'], 'db') | path_join}}"
-    seafile_data_folder: "{{ (seafile_user['home'], 'data') | path_join}}"
-    seafile_uid: "{{ seafile_user['uid']}}"
-    seafile_gid: "{{ seafile_user['group']}}"
+    seafile_db_folder: "{{ (seafile_home_dir, 'db') | path_join}}"
+    seafile_data_folder: "{{ (seafile_home_dir, 'data') | path_join}}"
+    seafile_uid: "{{ add_nas_user_uid.stdout }}"
+    seafile_gid: "{{ docker_group_gid }}"
+
+- name: Register seafile docker user
+  ansible.builtin.set_fact:
     seafile_docker_user: "{{ seafile_uid }}:{{ seafile_gid }}"
+
+- name: debug
+  ansible.builtin.debug:
+    var: seafile_docker_user
 
 - name: Create Seafile Directories
   ansible.builtin.file:

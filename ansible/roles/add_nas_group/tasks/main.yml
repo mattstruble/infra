@@ -1,0 +1,12 @@
+---
+- name: "Add group"
+  # no_log: true # hide passwords
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+    - "{{ add_group.yml }}"
+
+- name: "Get gid for {{ add_nas_group_name }}"
+  ansible.builtin.command: python -c 'import grp; print(grp.getgrnam("{{ add_nas_group_name }}").gr_gid)'
+  changed_when: false
+  register: add_nas_group_gid

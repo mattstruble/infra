@@ -1,0 +1,13 @@
+---
+- name: Get list of groups
+  become: true
+  ansible.builtin.command: "/usr/syno/sbin/synogroup --enum all"
+  changed_when: false
+  register: synogroup_list
+
+- name: "Create group {{ add_nas_group_name }}"
+  when: add_nas_group_name not in synogroup_list.stdout_lines
+  ansible.builtin.command:
+    argv:
+      - /usr/syno/sbin/synogroup
+      - --add {{ add_nas_group_name | quote}}
