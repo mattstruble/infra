@@ -1,41 +1,40 @@
----
 ungrouped:
-  hosts:
-    localhost:
-      vars:
-        ansible_connection: local
-        ansible_python_interpreter: '{{ansible_playbook_python}}'
+    hosts:
+        localhost:
+            vars:
+                ansible_connection: local
+                ansible_python_interpreter: '{{ansible_playbook_python}}'
 rpis:
-  hosts:
-    brrpi1: null
-    brrpi2: null
-    brrpi3: null
+    hosts:
+        brrpi1: null
+        brrpi2: null
+        brrpi3: null
 swarm:
-  hosts:
-    brrpi1: null
-    brrpi2: null
-    brrpi3: null
+    hosts:
+        brrpi1: null
+        brrpi2: null
+        brrpi3: null
 homelab:
-  hosts:
-    nas:
-      ansible_python_interpreter: /volume1/@appstore/python310/bin/python3
-      ansible_user: ENC[AES256_GCM,data:oE5GS0ZqBUFZ,iv:jEluzENFJtj9VVg0FwwiPI5y6iKgzEddo7NQ7glRb8Q=,tag:O1Jg+Cb0yL2RMaQ/CnSjhA==,type:str]
-      ansible_become: true
-      ansible_host: ENC[AES256_GCM,data:XVUNHAx/9Izw,iv:A7HWKeaxH7/XgKXtL7DZEtvpc37f9BodiPXJN6PN7VQ=,tag:Um66dC5NIQLEuIk7i+ZxPg==,type:str]
-  children:
-    swarm: null
+    hosts:
+        nas:
+            ansible_python_interpreter: /volume1/@appstore/python310/bin/python3
+            ansible_user: ENC[AES256_GCM,data:HOsHlwhdNe7Z,iv:7KHa3DtB7WsQrnc9jCLRC4hnvEb3otCKohxWhU5AXCA=,tag:cNRua7HSO719FMllk9wUtg==,type:str]
+            ansible_become: true
+            ansible_host: ENC[AES256_GCM,data:1Hr9p3e2/j9y,iv:e7Z8flXS5PYcJoyFQxbI+pOjbkI2VmfBY7TnGSbvk+4=,tag:dMj/d0o01Bwf+tZTEbEaJw==,type:str]
+    children:
+        swarm: null
 sops:
-  kms:
-    - arn: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
-      created_at: "2025-02-12T16:36:11Z"
-      enc: AQICAHiSR6wcpqJfa+Jpz2xwxDpKbgxR3kN1d8wbd2wXig6iUAHIOs59tBBCVb2cnJBl+6E6AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMjnYFX2Vl+JB4HWDuAgEQgDsnak7/8R+jt6IrvKLNgoTtj7Oyqi27X3jSPmMtjlwXarKg/B6oT/1Gi4mRl3M0XqS+7dmY5lPbABFGsg==
-      aws_profile: ""
-  gcp_kms: []
-  azure_kv: []
-  hc_vault: []
-  age: []
-  lastmodified: "2025-02-12T16:36:11Z"
-  mac: ENC[AES256_GCM,data:0YhcUXep4sR/+rZHUjrabIjbOwHxoXSfj2sevpxuDczJdfOmlHR7BxVH/f8L6bfkm6HBOyjoIyhNjlTWX9q6nQ4E0swc3fdpiLSGfBFjp26OE6Yn0dExg8uGpjNlcBZLyIi0XCtPcegYbeLXfNMVl5T9lRaUGPvWA5uAHH2WdVE=,iv:4+5AShwqMSLvDW2FBJ0O+Y4cLM23gCF+UJOZL9xtTWI=,tag:PRtBG2Ei7ts2lJcb6X915g==,type:str]
-  pgp: []
-  encrypted_regex: ^(ansible_(user|host))$
-  version: 3.9.3
+    kms:
+        - arn: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
+          created_at: "2025-02-13T15:14:31Z"
+          enc: AQICAHiSR6wcpqJfa+Jpz2xwxDpKbgxR3kN1d8wbd2wXig6iUAGi8Rsc8F9Br/WATPgcWZv3AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMhISFaxTwMOoyp3KUAgEQgDsEgr+fomVJqHoqpILV7TvIKayo6e4IsymiWAm9vacgISB3ZcwAwVKqTwM9rleG2urSRAW/7XgkMihGEw==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2025-02-13T15:14:31Z"
+    mac: ENC[AES256_GCM,data:5QIg9hvJClDKFdX99WvhoGcToTatEcVCKlyvn96Ei7/f7bCqeLDGbPO27GwjYz6g41fF/iJ4uZXeQP/dPO0eX5UHVxxKQdYonm0Vg7KLO/2K7CRz4myma74OhtomBjBFdCuH4Kxxp6KjveuXvSMpfa2bl4m0NYMJFxw3BPtikAQ=,iv:c3D4zs2E7e+uykFAeeLgZ73UmS9qIVDab+U3qYnoVyo=,tag:xyA7ZJzWhqC/FAfcm6WPPg==,type:str]
+    pgp: []
+    encrypted_regex: ^(ansible_(user|host))$
+    version: 3.9.3

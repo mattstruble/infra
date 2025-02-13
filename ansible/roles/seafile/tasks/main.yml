@@ -14,7 +14,7 @@
 
 - name: Register seafile user home dir
   ansible.builtin.set_fact:
-    seafile_home_dir: "{{ add_nas_user_home_dir.stdout }}"
+    seafile_home_dir: "{{ add_nas_user_home_dir }}"
 
 - name: Register seafile user Info
   ansible.builtin.set_fact:
@@ -29,7 +29,9 @@
 
 - name: debug
   ansible.builtin.debug:
-    var: seafile_docker_user
+    var: seafile_db_folder
+
+- ansible.builtin.fail:
 
 - name: Create Seafile Directories
   ansible.builtin.file:
