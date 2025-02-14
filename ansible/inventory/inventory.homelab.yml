@@ -18,23 +18,8 @@ homelab:
     hosts:
         nas:
             ansible_python_interpreter: /volume1/@appstore/python310/bin/python3
-            ansible_user: ENC[AES256_GCM,data:oGlfGaNp2EcS,iv:tWY/SIlLRHJWjMLNYTtMJK4xnDWWHCuEUuVa049rN0o=,tag:UWmkYNhdROtmljuTprQhBg==,type:str]
+            ansible_user: mestruble
             ansible_become: true
-            ansible_host: ENC[AES256_GCM,data:nRHDR0oluwML,iv:9hoKyPd/pV+gh6NRT+HwyzS5adwiCeaGQViDjK4bSUE=,tag:+KxJlM0wCyaLu4gi+MdJuw==,type:str]
+            ansible_host: yggdrasil
     children:
         swarm: null
-sops:
-    kms:
-        - arn: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
-          created_at: "2025-02-14T02:40:48Z"
-          enc: AQICAHiSR6wcpqJfa+Jpz2xwxDpKbgxR3kN1d8wbd2wXig6iUAG3SyjiwcINeXi5aa0nYRJXAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMZS/p0rMtGhMq7j18AgEQgDuCGeAbfjMcECMa4Tr3IwFBluUfsx/8h0WfX2FNR7XCOfBHVdQxQ6STTdedNMeFe9DmTic3RR2kW9rU1A==
-          aws_profile: ""
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2025-02-14T02:40:49Z"
-    mac: ENC[AES256_GCM,data:OyfHNAqsntjoGmFqMZANcB6m4nLcdZfBYL/KYtvxHhZekjBpSpBbbzxs56iy2x88ig0NADeWTNnojiMwQoxUsMFZaE5Uc411BRrLbv+JmUsXSLdrFI1lhdkN5GtHo0jdnAQdrxTF6RsNCmjF1DSH3cGd8oQhyMYX15+XskCk6Eo=,iv:UcXKQ0y+FNiujLXt+5b8HOlSPFSMkjhhc6oxzGzqiE0=,tag:RDrsq0en7k7GmvJdOik7QQ==,type:str]
-    pgp: []
-    encrypted_regex: ^(ansible_(user|host))$
-    version: 3.9.3
