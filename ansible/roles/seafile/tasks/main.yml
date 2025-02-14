@@ -1,4 +1,16 @@
 ---
+- name: Create group "seafile"
+  ansible.builtin.include_role:
+    name: add_nas_group
+    apply:
+      delegate_to: nas
+  vars:
+    add_nas_group_name: seafile
+
+- name: Register seafile gid
+  ansible.builtin.set_fact:
+    seafile_gid: "{{ add_nas_group_gid }}"
+
 - name: Ensure "seafile" user exists
   ansible.builtin.include_role:
     name: add_nas_user
@@ -8,6 +20,7 @@
     add_nas_user_account: "{{ seafile_user }}"
     add_nas_user_groups:
       - docker
+      - seafile
     add_nas_user_comment: Seafile Docker User
     add_nas_user_create_home: true
     add_nas_user_password: "{{ seafile_user_password }}"
@@ -21,7 +34,6 @@
     seafile_db_folder: "{{ (seafile_home_dir, 'db') | path_join}}"
     seafile_data_folder: "{{ (seafile_home_dir, 'data') | path_join}}"
     seafile_uid: "{{ add_nas_user_uid }}"
-    seafile_gid: "{{ docker_group_gid }}"
 
 - name: Register seafile docker user
   ansible.builtin.set_fact:
@@ -31,6 +43,9 @@
   ansible.builtin.file:
     path: "{{ item }}"
     owner: "{{ seafile_user }}"
+    group: "seafile"
+    mode: '0777'
+    recurse: true
     state: directory
   loop:
     - "{{ seafile_db_folder }}"
@@ -64,12 +79,6 @@
       MYSQL_PWD: "{{ seafile_init_sql_root_password }}"
       MYSQL_LOG_CONSOLE: "{{ seafile_sql_log_console }}"
       MARIADB_AUTO_UPGRADE: "{{ seafile_mariadb_auto_upgrade }}"
-    healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect", "--mariadbupgrade", "--innodb_initialized"]
-      interval: 20s
-      start_period: 30s
-      timeout: 5s
-      retries: 10
     restart_policy: "unless-stopped"
     comparisons:
       "*": strict
@@ -92,10 +101,9 @@
 - name: Create seafile-mc
   community.docker.docker_container:
     name: seafile
-    user: "{{ seafile_docker_user }}"
     image: seafileltd/seafile-mc:12.0-latest
-    ports:
-      - "80"
+    published_ports:
+      - "0.0.0.0::80"
     networks:
       - name: "{{ network_name }}"
     volumes:

@@ -59,3 +59,13 @@
     owner: "root"
     group: "docker"
     mode: "760"
+
+# - name: Schedule monthly docker prune
+#   ansible.builtin.cron:
+#     name: "Monthly Docker prune"
+#     minute: "0"
+#     hour: "0"
+#     day: "1"
+#     month: "*"
+#     job: "docker system prune -af --volumes"
+#     state: present
