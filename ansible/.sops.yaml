@@ -1,6 +1,6 @@
 ---
 creation_rules:
-  - path_regex: vault\.yml$
+  - path_regex: .*sops\.yml$
     kms: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
 
   - path_regex: inventory.*.yml$

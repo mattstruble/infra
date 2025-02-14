@@ -5,12 +5,12 @@
     apply:
       delegate_to: nas
   vars:
-    add_nas_user_account: seafile
+    add_nas_user_account: "{{ seafile_user }}"
     add_nas_user_groups:
       - docker
     add_nas_user_comment: Seafile Docker User
     add_nas_user_create_home: true
-    add_nas_user_password: "{{ lookup('ansible.builtin.password', 'credentials/nas/seafile', length=30)}}"
+    add_nas_user_password: "{{ seafile_user_password }}"
 
 - name: Register seafile user home dir
   ansible.builtin.set_fact:
@@ -20,23 +20,17 @@
   ansible.builtin.set_fact:
     seafile_db_folder: "{{ (seafile_home_dir, 'db') | path_join}}"
     seafile_data_folder: "{{ (seafile_home_dir, 'data') | path_join}}"
-    seafile_uid: "{{ add_nas_user_uid.stdout }}"
+    seafile_uid: "{{ add_nas_user_uid }}"
     seafile_gid: "{{ docker_group_gid }}"
 
 - name: Register seafile docker user
   ansible.builtin.set_fact:
     seafile_docker_user: "{{ seafile_uid }}:{{ seafile_gid }}"
 
-- name: debug
-  ansible.builtin.debug:
-    var: seafile_db_folder
-
-- ansible.builtin.fail:
-
 - name: Create Seafile Directories
   ansible.builtin.file:
     path: "{{ item }}"
-    owner: "{{ seafile_user['name'] }}"
+    owner: "{{ seafile_user }}"
     state: directory
   loop:
     - "{{ seafile_db_folder }}"
@@ -76,6 +70,7 @@
       start_period: 30s
       timeout: 5s
       retries: 10
+    restart_policy: "unless-stopped"
     comparisons:
       "*": strict
   register: seafile_db
@@ -88,4 +83,36 @@
     entrypoint: ["memcached", "-m", "256"]
     networks:
       - name: "{{ network_name }}"
+    state: started
+    restart_policy: "unless-stopped"
+    comparisons:
+      "*": strict
   register: seafile_memcached
+
+- name: Create seafile-mc
+  community.docker.docker_container:
+    name: seafile
+    user: "{{ seafile_docker_user }}"
+    image: seafileltd/seafile-mc:12.0-latest
+    ports:
+      - "80"
+    networks:
+      - name: "{{ network_name }}"
+    volumes:
+      - "{{ seafile_data_folder }}:/shared"
+    env:
+      DB_HOST: "{{ seafile_db['container']['Config']['Hostname']}}"
+      DB_USER: "{{ seafile_mysql_db_user }}"
+      DB_PASSWORD: "{{ seafile_mysql_db_password }}"
+      DB_ROOT_PASSWD: "{{ seafile_init_sql_root_password }}"
+      TIME_ZONE: "{{ time_zone }}"
+      INIT_SEAFILE_ADMIN_EMAIL: "{{ seafile_admin_email }}"
+      INIT_SEAFILE_ADMIN_PASSWORD: "{{ seafile_admin_password }}"
+      SEAFILE_SERVER_HOSTNAME: "{{ seafile_server_hostname }}"
+      SEAFILE_SERVER_PROTOCOL: "{{ seafile_server_protocol }}"
+      NON_ROOT: "true"
+      JWT_PRIVATE_KEY: "{{ jwt_private_key }}"
+    restart_policy: "unless-stopped"
+    state: started
+    comparisons:
+      "*": strict

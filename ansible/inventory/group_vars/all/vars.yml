@@ -1,3 +1,5 @@
+---
 cftoken: "{{ vault_cftoken }}"
 cfuser: "{{ vault_cfuser }}"
 cfzone: "{{ vault_cfzone }}"
+time_zone: America/New_York

@@ -10,3 +10,7 @@
   ansible.builtin.command: "id -u {{ add_nas_user_account }}"
   changed_when: false
   register: add_nas_user_uid
+
+- name: Register nas user uid
+  ansible.builtin.set_fact:
+    add_nas_user_uid: "{{ add_nas_user_uid.stdout | trim }}"

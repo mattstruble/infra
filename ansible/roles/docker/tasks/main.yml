@@ -43,7 +43,7 @@
 - name: Create docker group facts
   ansible.builtin.set_fact:
     docker_group_name: docker
-    docker_group_gid: "{{ add_nas_group_gid.stdout }}"
+    docker_group_gid: "{{ add_nas_group_gid }}"
 
 - name: Ensure folder "docker" exists
   ansible.builtin.file:

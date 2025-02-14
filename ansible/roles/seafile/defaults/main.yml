@@ -1,4 +1,6 @@
-seafile_user: "root"
+---
+seafile_user: seafile
+seafile_user_password: "secret"
 seafile_folder_path: "/opt/seafile/"
 seafile_init_sql_root_password: "secret"
 seafile_sql_log_console: "true"

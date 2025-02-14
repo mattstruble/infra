@@ -10,3 +10,7 @@
   ansible.builtin.command: python -c 'import grp; print(grp.getgrnam("{{ add_nas_group_name }}").gr_gid)'
   changed_when: false
   register: add_nas_group_gid
+
+- name: Register gid
+  ansible.builtin.set_fact:
+    add_nas_group_gid: "{{ add_nas_group_gid.stdout | trim }}"
