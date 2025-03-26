@@ -8,7 +8,7 @@ include "root" {
 
 inputs = {
   icloudmail_verification = "apple-domain=mWN9NAbG7qXAliVd"
-  icloudmail_dmarc = "v=DMARC1; p=quarantine; adkim=s; rua=mailto:dmarc@struble.dev"
+  icloudmail_dmarc        = "v=DMARC1; p=quarantine; adkim=s; rua=mailto:dmarc@struble.dev"
 }
 
 terraform {
