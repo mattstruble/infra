@@ -1,8 +1,8 @@
 ---
 seafile_user: seafile
-seafile_user_password: "secret"
+seafile_user_password: "foobar" #pragma: allowlist secret
 seafile_folder_path: "/opt/seafile/"
-seafile_init_sql_root_password: "secret"
+seafile_init_sql_root_password: "foobar" #pragma: allowlist secret
 seafile_sql_log_console: "true"
 seafile_mariadb_auto_upgrade: "1"
 seafile_db_folder: "{{ (seafile_folder_path, 'db') | path_join }}"

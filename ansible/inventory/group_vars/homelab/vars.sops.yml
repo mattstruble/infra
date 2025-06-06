@@ -1,24 +1,20 @@
-seafile_init_sql_root_password: ENC[AES256_GCM,data:Vnv0FO6lWigJmNmwqRZ3po9q2IYTCavTh9zdVUTkRxkOKKc5UWZcog==,iv:/X8twNHo0rnYBkjWZzVSk8KhGpL+ssn2TISvFpiq/gE=,tag:jjqCfXqKBZysBPQ6kUdX0A==,type:str]
-seafile_user_password: ENC[AES256_GCM,data:9DkkqeKLto+6RLbvXTBLXu/kQ0kTC+WUk6zyC+iP,iv:L+f6+XVlOsxhUHJSBhK27zyrodXXar8WE2TBMYWpWmY=,tag:3QJGarKIOF4J89OkVfvV6g==,type:str]
-seafile_mysql_db_user: ENC[AES256_GCM,data:GHqmJ2Eq/w==,iv:rwfjPbM/w8MTPILvBp0GFF1rkaN04Wa91xyBIOBb+Ds=,tag:gRqkOKTyg4KwvQC8sRlrxw==,type:str]
-seafile_mysql_db_password: ENC[AES256_GCM,data:z+8wLvOhK1qIyXJ1y7Hb8/z/LWqJDeUOr0gTS6B1PlXYQqanrs83yQ==,iv:IoE//M5sD1sAwhD89ojbVLWH9PJuiAKkDBiMqQb/6YI=,tag:ZOhagaMYofYZbeVbgteuXw==,type:str]
-jwt_private_key: ENC[AES256_GCM,data:GfN06o84FcNUF7zJQLzrk/ig5t49XpyY2iOg02JBPNxZCygOlZA4Gg==,iv:K1tLFAkB+jBifJd949gRy6+rpvIBMUlcy9RjaTqcdwU=,tag:KRuRIHj/vO6aRZiioef87w==,type:str]
-seafile_server_hostname: ENC[AES256_GCM,data:CGCcKYe1ugEqHSrwrwzSox8=,iv:yBdZxwbhNl+AgOg/O9RhXJxRAN0Eq0LZgaDHkWhVErg=,tag:igjJPAaqtPz88c4CF+Q8Rg==,type:str]
-seafile_server_protocol: ENC[AES256_GCM,data:HTC/2Q==,iv:JMshCd0cngpKy7UGQ9xVMmYKRVUaBQ5wW33x0wat7K4=,tag:l5K8pmGcVMvRPxEEcACpFg==,type:str]
-seafile_admin_email: ENC[AES256_GCM,data:iCFhPDtw9wchBsZZILk2Sw==,iv:Ex6okUkc+BvihUg7zjtcI2L8aD6hKvJ/yxnUxMzWDi0=,tag:B5TgqR+iLvc4Uebhl7DpcQ==,type:str]
-seafile_admin_password: ENC[AES256_GCM,data:oY8PnPXRrApVWg==,iv:FidgWkNqZTEopcEzhJad0hhJb606KO3k++JijqErerY=,tag:xRJet2fU50FUhF8q6MJF6g==,type:str]
+---
+seafile_init_sql_root_password: ENC[AES256_GCM,data:A8MRWmKUxBOBMrU6R4PEZVr8DAZ7ycNn2AhPLSOekacf0Wh4MEWQFw==,iv:YYik3ah4EnY8fO9O3/t8GZT7B0m/GLxDTOh+AJLa0uQ=,tag:qIduTuPl6vmeKHUMcXtSkA==,type:str]
+seafile_user_password: ENC[AES256_GCM,data:wOLm41/4wxdL6xzrw3vMhfL+TI9FzTixRiU+i5jg,iv:2gM/dvmvA08HzI3a1cGDCQLgrhJgLJ5im5XxVJbOEVM=,tag:V1CVuw8eL40MQAf1G03dUg==,type:str]
+seafile_mysql_db_user: ENC[AES256_GCM,data:Gl7MdDeg5A==,iv:VoxEceZ1mbqzTlfb+3LYyvBfQe2cTpZuGJjyMlOfeuY=,tag:B8NtDWjFuAQPG0Qc+FWFzA==,type:str]
+seafile_mysql_db_password: ENC[AES256_GCM,data:HRa9WrLBxvTDc/Q8KuKJ6Zs7qWq8cpzIkfqAmJ+76dOWFpZxvxGf4w==,iv:kSDWDFLySLHdkoDUjD6+fxH1Ntcp6BTv3c2iGd1ENOg=,tag:sHjlW8L9mjrBlyzYuYgE1Q==,type:str]
+jwt_private_key: ENC[AES256_GCM,data:OVyVi5TiOfjYVpqhE7bAtC9y6BsJiZzmwPBQn+Me314FxN6oSQcysA==,iv:XxQp2R9HeGXv3EQ9YJ76Ozh/PgevQJDrQhMVGn9a3EA=,tag:9wVg7OlPvfZ10HBYEK9/0A==,type:str]
+seafile_server_hostname: ENC[AES256_GCM,data:9n7YPTallOiJtOfxojkhZOc=,iv:ObfKMQpyBGv+PQzkYmr9bAkDT9/bAXNM6ACW9g7q+jk=,tag:KWBNcGZkQFjNKLoWYnqtbA==,type:str]
+seafile_server_protocol: ENC[AES256_GCM,data:TRherQ==,iv:X0MBeCMVhjK3SXkrltXqAOJjwIVBg+JEOc2VyN+JShQ=,tag:165MjeD7dhGX/6OBIQ88lg==,type:str]
+seafile_admin_email: ENC[AES256_GCM,data:2WPyYQHFVAa7Aplhf8CXDw==,iv:BcOZbJn7hkgPFV5E5SJfctSENiR/5m+29fNh0JtLVYU=,tag:bIkE47Eh9MK8sqwEOoHkaA==,type:str]
+seafile_admin_password: ENC[AES256_GCM,data:SLqY4pkGMa967g==,iv:R/MhOhJ9cY20ZE6njy0726cewW9e8LFHT2w2wpVGrmk=,tag:IluU+zcAJs0BXhiPKswk3A==,type:str]
 sops:
-    kms:
-        - arn: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
-          created_at: "2025-02-14T02:43:00Z"
-          enc: AQICAHiSR6wcpqJfa+Jpz2xwxDpKbgxR3kN1d8wbd2wXig6iUAGBkYM8atrvWn/RpF3FKOn8AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMlyWODtikt5fOBJlgAgEQgDupWQGvsF859JEjy/5Eyc+sOrWaLRP/2cASu+EUGngJurEpJp5zOUBUPzLOcUCbKHkz1aFk+B8tD50phQ==
-          aws_profile: ""
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2025-02-14T02:43:00Z"
-    mac: ENC[AES256_GCM,data:b/aHHEhmtHOE4j6H5Rofm7ta7Nc6Budx7S/yZHFdAjnGx/sGXYpjfMp3P7ieoxCdbW4HvsJi8FL1+7WXwRC91FJO3GH6DY1BzWrcpTwWg35VucRBgyPzGpVZiLG3nOVe6+qW2NCHhI0xFp9dlRe/YjVW+VvWNvboaKh4Jlmp0XE=,iv:48Baz21NEnTzQggBe12yl9NJ9h3AFZA88Y59YVN4B40=,tag:RSrK5NF+A/z86fnlJ+Jt3A==,type:str]
-    pgp: []
-    unencrypted_suffix: _unencrypted
-    version: 3.9.3
+  kms:
+    - arn: arn:aws:kms:us-east-1:584274110661:alias/homelab-cicd-kms
+      created_at: "2025-06-06T18:08:44Z"
+      enc: AQICAHiSR6wcpqJfa+Jpz2xwxDpKbgxR3kN1d8wbd2wXig6iUAGOK/j+ZT16rCXDk8dEqdetAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsplC5tf0OQWonF5rAgEQgDvaq6yDZEWr2eIz0Cax56MqSO9jrN+haDl+aqU+ZqGZURbhssqksXSb7Pj19lyZmhu1DOEyIcqyLk1ixw==
+      aws_profile: ""
+  lastmodified: "2025-06-06T18:08:44Z"
+  mac: ENC[AES256_GCM,data:4uRXVuwUpoFaKuTczJAkt7UNzPJaOEYn8MX/Vw9PVc3RXyBqvh5LqSwUmNS6g6RaEcCdBGFi/mV10kAHBuxFKnNV0BCZk5mLyi+zUrlD429qV4qAG5eWqXk+Tp42PBpIu3Lc6lkkG7hVJ+S8lnWLIc9Ot7APLXh+OAUGZUXe41E=,iv:A/V7cmlIDL6Iwty1rChplAbWvIYSDqFrO0+OKJKKXKc=,tag:P68ee1oSqJMsq+dcBk75tQ==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.10.2

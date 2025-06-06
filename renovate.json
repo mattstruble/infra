@@ -1,0 +1,23 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "enabled": true,
+    "extends": [
+        "config:base",
+        "docker:enableMajor",
+        ":semanticCommits"
+    ],
+    "commitBodyTable": true,
+    "timezone": "America/New_York",
+    "semanticCommits": "enabled",
+    "rebaseWhen": "conflicted",
+    "enabledManagers": ["ansible", "ansible-galaxy", "regex"],
+    "docker": {
+        "enabled": true
+    },
+    "updateInternalDependencies": true,
+    "prHourlyLimit": 2,
+    "prConcurrentLimit": 5,
+    "schedule": [
+        "after 10pm and before 6am on every weekday"
+    ]
+}

@@ -7,10 +7,13 @@ default: plan
 
 .PHONY: init
 init:
-	@git config core.hooksPath "./git-hooks"
-	@chmod u+x ./git-hooks/post-commit
+	@pre-commit install
 	@terragrunt run-all init --terragrunt-working-dir ${TERRAGRUNT_WORKING_DIR}
 	@ansible-galaxy install -r ansible/requirements.yml
+
+.PHONY: lint
+lint:
+	@pre-commit run --all-files
 
 .PHONY: plan
 plan : init
